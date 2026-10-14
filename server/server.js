@@ -1,12 +1,10 @@
 import express from 'express'
 import path from 'path'
 import favicon from 'serve-favicon'
-import dotenv from 'dotenv'
-
-// import the router from your routes file
-
-
-dotenv.config()
+import './config/dotenv.js'
+// import the routers from your routes files
+import carsRouter from './routes/cars.js'
+import optionsRouter from './routes/options.js'
 
 const PORT = process.env.PORT || 3000
 
@@ -22,8 +20,9 @@ else if (process.env.NODE_ENV === 'production') {
     app.use(express.static('public'))
 }
 
-// specify the api path for the server to use
-
+// specify the api paths for the server to use
+app.use('/api/cars', carsRouter)
+app.use('/api/options', optionsRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.get('/*', (_, res) =>
